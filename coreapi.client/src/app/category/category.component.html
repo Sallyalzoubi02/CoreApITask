@@ -1,0 +1,20 @@
+<p>category works!</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+     
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of category">
+      <th scope="row">{{item.categoryId}}</th>
+      <td>{{item.categoryName}}</td>
+      <td>{{item.categoryDesc}}</td>
+      
+    </tr>
+  </tbody>
+</table>

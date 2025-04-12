@@ -1,4 +1,5 @@
 ﻿using CoreApI.Server.Models;
+using CoreApI.Server.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,25 +9,26 @@ namespace CoreApI.Server.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly MyDbContext myDb; //DI for Database
 
+        private readonly IProductService _ps;
 
-        public ProductController(MyDbContext db)
+        public ProductController(IProductService ps)
         {
-            myDb = db;
+            _ps = ps;
         }
 
         [HttpGet("GetAllProducts")]
         public IActionResult GetAllProducts()
         {
-            var products = myDb.Products.ToList();
+            var products = _ps.GetAllProducts();
             return Ok(products);
         }
 
         [HttpGet("GetByCategoryID")]
         public IActionResult GetAllProductsByCategory(int catID)
         {
-            var products = myDb.Products.Where(x => x.CategoryId == catID).ToList();
+
+            var products = _ps.GetAllProductsByCategory(catID);
 
             if (products != null)
             { 
@@ -42,22 +44,49 @@ namespace CoreApI.Server.Controllers
         [HttpGet("GetProductByID")]
         public IActionResult GetProductByID(int id)
         {
-            var product = myDb.Products.Find(id);
-            return Ok(product);
+            var product = _ps.GetProductByID(id);
+            if (product != null)
+            {
+                return Ok(product);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet("GetProductByname")]
-        public IActionResult GetCategoryByName(string name)
+        public IActionResult GetProductByName(string name)
         {
-            var product = myDb.Products.SingleOrDefault(x => x.Name == name);
-            return Ok(product);
+            var product = _ps.GetProductByName(name);
+            if (product != null)
+            {
+                return Ok(product);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet("GetFirstProduct")]
         public IActionResult GetFirstCategory()
         {
-            var product = myDb.Products.First();
+            var product = _ps.GetFirstProduct();
             return Ok(product);
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteProduct(int id)
+        {
+            var product = _ps.DeleteProduct(id);
+            if (product != false)
+            {
+                return Ok();
+            }
+            else {
+                return NotFound();
+            }
         }
     }
 }
