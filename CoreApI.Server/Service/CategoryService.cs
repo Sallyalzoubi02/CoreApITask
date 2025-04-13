@@ -1,4 +1,5 @@
 ﻿using CoreApI.Server.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoreApI.Server.Service
 {
@@ -46,5 +47,44 @@ namespace CoreApI.Server.Service
                 return false;
             }
         }
+
+        public void AddCategory(CategoryDTO category)
+        {
+            var newCategory = new Category
+            {
+                CategoryName = category.CategoryName,
+                CategoryDesc = category.CategoryDesc
+            };
+
+            _db.Categories.Add(newCategory);
+            _db.SaveChanges();
+        }
+
+        public bool UpdateCategory(int id, CategoryDTO category)
+        {
+            var existingCategory = _db.Categories.FirstOrDefault(c => c.CategoryId == id);
+            if (existingCategory == null)
+            {
+                return false;
+            }
+            existingCategory.CategoryName = category.CategoryName;
+            existingCategory.CategoryDesc = category.CategoryDesc;
+            _db.SaveChanges();
+            return true;
+        }
+
+
+        public bool UpdateCat(int id , CategoryDTO category)
+        {
+            var cat = _db.Categories.Find(id);
+
+            if (cat == null)
+                return false;
+            cat.CategoryName = category.CategoryName;
+            cat.CategoryDesc = category.CategoryDesc;
+            _db.SaveChanges();
+            return true;
+        }
+
     }
 }

@@ -2,6 +2,7 @@
 using CoreApI.Server.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoreApI.Server.Controllers
 {
@@ -59,6 +60,54 @@ namespace CoreApI.Server.Controllers
             {
                 return NotFound();
             }
+        }
+
+        [HttpPost]
+        public IActionResult AddCategory([FromForm] CategoryDTO category)
+        {
+            if (category == null)
+               return BadRequest();
+            _categoryService.AddCategory(category);
+
+            return CreatedAtAction(
+                   nameof(GetCategoryByID), 
+                   new { id = category.CategoryId }, 
+                   category);
+        }
+
+        [HttpPut("UpdateCategory/{id}")]
+        public IActionResult UpdateCategory(int id, [FromBody] CategoryDTO category)
+        {
+            if (category == null)
+            {
+                return BadRequest();
+            }
+
+            var updated = _categoryService.UpdateCategory(id, category);
+
+            if (!updated)
+            {
+                return NotFound();
+            }
+
+            return Ok(category);
+        }
+
+
+        [HttpPut("update/{id}")]
+        public IActionResult UpdateCat(int id, [FromForm] CategoryDTO category)
+        {
+            if (category == null)
+                return BadRequest();
+
+            var Update = _categoryService.UpdateCat(id, category);
+
+            if (Update)
+            {
+                return Ok();
+
+            }
+            return BadRequest();
         }
     }
 }

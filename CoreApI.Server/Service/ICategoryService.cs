@@ -8,6 +8,11 @@ namespace CoreApI.Server.Service
         Category GetByID(int id);
         Category GetByName(string name);
         Category GetFirstCategory();
-        public bool DeleteCategory(int id);
+        bool DeleteCategory(int id);
+        public void AddCategory(CategoryDTO category);
+
+        bool UpdateCategory(int id, CategoryDTO updatedCategory);
+
+        public bool UpdateCat(int id, CategoryDTO category);
     }
 }
