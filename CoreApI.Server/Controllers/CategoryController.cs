@@ -18,12 +18,16 @@ namespace CoreApI.Server.Controllers
         }
 
         [HttpGet("GetAllCategories")]
+      
         public IActionResult GetAllCategory() {
             var categories = _categoryService.GetAll();
             return Ok(categories);
         }
 
         [HttpGet("GetCategoryByID/{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult GetCategoryByID(int id)
         {
             var category = _categoryService.GetByID(id);
@@ -33,6 +37,9 @@ namespace CoreApI.Server.Controllers
         }
 
         [HttpGet("GetCategoryByName/{name:alpha}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult GetCategoryByName(string name)
         {
             var category = _categoryService.GetByName(name);
@@ -42,6 +49,8 @@ namespace CoreApI.Server.Controllers
         }
 
         [HttpGet("GetFirstCategory")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult GetFirstCategory()
         {
             var category = _categoryService.GetFirstCategory();
@@ -49,6 +58,9 @@ namespace CoreApI.Server.Controllers
         }
 
         [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult DeleteCategory([FromQuery]int id)
         {
             var product = _categoryService.DeleteCategory(id);
@@ -63,20 +75,24 @@ namespace CoreApI.Server.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult AddCategory([FromForm] CategoryDTO category)
         {
             if (category == null)
                return BadRequest();
             _categoryService.AddCategory(category);
 
-            return CreatedAtAction(
-                   nameof(GetCategoryByID), 
-                   new { id = category.CategoryId }, 
-                   category);
+            return Ok();
         }
 
         [HttpPut("UpdateCategory/{id}")]
-        public IActionResult UpdateCategory(int id, [FromBody] CategoryDTO category)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public IActionResult UpdateCategory(int id, [FromForm] CategoryDTO category)
         {
             if (category == null)
             {
@@ -95,6 +111,9 @@ namespace CoreApI.Server.Controllers
 
 
         [HttpPut("update/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult UpdateCat(int id, [FromForm] CategoryDTO category)
         {
             if (category == null)

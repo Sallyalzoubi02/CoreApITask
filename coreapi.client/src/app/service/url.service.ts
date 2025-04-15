@@ -17,11 +17,11 @@ export class UrlService {
     return this._http.get("https://localhost:7156/api/Category/GetAllCategories")
   }
 
-  updateCategory(id: number, categoryName: string): Observable<any> {
-    const body = { id, categoryName };
-    return this._http.put(`https://localhost:7156/api/Category/UpdateCategory/{id}`, body);
+  updateCategory(id: number, data: any): Observable<any> {
+    const body = { id, data };
+    return this._http.put(`https://localhost:7156/api/Category/UpdateCategory/${id}`, data);
   }
   getCategoryById(id: number) {
-    return this._http.get(`https://localhost:7156/api/Category/GetCategoryByID{id}`)
+    return this._http.get(`https://localhost:7156/api/Category/GetCategoryByID/${id}`)
   }
 }

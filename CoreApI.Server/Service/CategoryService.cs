@@ -67,6 +67,7 @@ namespace CoreApI.Server.Service
             {
                 return false;
             }
+
             existingCategory.CategoryName = category.CategoryName;
             existingCategory.CategoryDesc = category.CategoryDesc;
             _db.SaveChanges();

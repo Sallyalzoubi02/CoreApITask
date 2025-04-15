@@ -1,24 +1,20 @@
-<!--<p>update-category works!</p>
+<p>update-category works!</p>
 <div class="container">
   <h2>Update Category</h2>
+  <form #edit="ngForm" (ngSubmit)="updateCategory(edit.value)">
+    
 
-  <div>
-    <label>Category ID</label>
-    <input type="number" [(ngModel)]="categoryId" readonly>
-  </div>
+    <div>
+      <label>New Category Name</label>
+      <input name="CategoryName" type="text" ngModel>
+    </div>
 
-  <div>
-    <label>New Category Name</label>
-    <input type="text" [(ngModel)]="categoryName">
-  </div>
+    <div>
+      <label>New Category Name</label>
+      <input name="CategoryDesc"  type="text" ngModel >
+    </div>
 
-  <div>
-    <label>New Category Name</label>
-    <input type="text" value="{{category.ca}}">
-  </div>
+    <button type="submit">Update</button>
 
-
-  <button (click)="updateCategory()">Update</button>
-
-  <p style="margin-top: 20px; font-weight: bold;">{{ resultMessage }}</p>
-</div>-->
+    <p style="margin-top: 20px; font-weight: bold;">{{ resultMessage }}</p>
+</form>

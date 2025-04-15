@@ -23,13 +23,14 @@ export class UpdateCategoryComponent {
     this.categoryService.getCategoryById(this.categoryId).subscribe((data) => this.category =data);
   }
 
-  updateCategory() {
-    if (!this.categoryId || !this.category) {
-      this.resultMessage = "Please enter both ID and Name";
-      return;
-    }
+  updateCategory(data:any) {
 
-    this.categoryService.updateCategory(this.categoryId, this.category)
+
+    var DataF = new FormData();
+    DataF.append("categoryName", data.CategoryName);
+    DataF.append("categoryDesc", data.CategoryDesc);
+
+    this.categoryService.updateCategory(this.categoryId, DataF)
       .subscribe({
         next: (res) => {
           this.resultMessage = res;

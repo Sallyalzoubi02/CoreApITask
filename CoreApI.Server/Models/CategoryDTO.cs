@@ -4,7 +4,6 @@ namespace CoreApI.Server.Models
 {
     public class CategoryDTO
     {
-        public int CategoryId { get; set; }
 
         [Required]
         [StringLength(100)]
